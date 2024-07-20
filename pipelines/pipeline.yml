@@ -10,11 +10,11 @@ jobs:
     - get: source
       trigger: true
     - set_pipeline: self
-      file: repo/pipelines/pipeline.yml
+      file: source/pipelines/pipeline.yml
 
   - name: hello
     plan:
-      - get: repo
+      - get: source
         trigger: true
         passed: [configure-self]
       - task: echo-hello-world
