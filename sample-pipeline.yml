@@ -1,0 +1,27 @@
+jobs:
+  - name: hello
+    plan:
+      - task: echo-hello-world
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: { repository: busybox }
+          run:
+            path: echo
+            args: ["Hello world!"]
+
+      - task: echo-hello-vault
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: { repository: busybox }
+          run:
+            path: sh
+            args:
+              - -exc
+              - |
+                echo ${MESSAGE}
+            params:
+            MESSAGE: ((concourse/myteam:testmessage))

@@ -1,0 +1,89 @@
+#version: '3'
+#
+#services:
+##  fly:
+##    image: custom-fly:latest
+##    depends_on: [concourse]
+##    volumes:
+##      - ..:/workspace
+##    build:
+##      context: ..
+##      dockerfile: ./Dockerfile.Fly
+#
+#  concourse-db:
+#    image: postgres
+#    environment:
+#      - POSTGRES_DB=concourse
+#      - POSTGRES_PASSWORD=concourse_pass
+#      - POSTGRES_USER=concourse_user
+#      - PGDATA=/database
+#
+#  concourse:
+#    image: rdclda/concourse:7.7.1
+#    command: quickstart
+#    privileged: true
+#    depends_on: [concourse-db, vault]
+#    ports: ["8080:8080"]
+#    environment:
+#      - CONCOURSE_POSTGRES_HOST=concourse-db
+#      - CONCOURSE_POSTGRES_USER=concourse_user
+#      - CONCOURSE_POSTGRES_PASSWORD=concourse_pass
+#      - CONCOURSE_POSTGRES_DATABASE=concourse
+#      - CONCOURSE_EXTERNAL_URL=http://localhost:8080/
+#      - CONCOURSE_ADD_LOCAL_USER=test:test
+#      - CONCOURSE_MAIN_TEAM_LOCAL_USER=test
+#      - CONCOURSE_WORKER_GARDEN_NETWORK
+#      - CONCOURSE_VAULT_URL=http://vault:8200
+#      - CONCOURSE_VAULT_CLIENT_TOKEN=YOUR_CUSTOM_TOKEN
+
+
+version: '3'
+
+services:
+  concourse-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: concourse
+      POSTGRES_PASSWORD: concourse_pass
+      POSTGRES_USER: concourse_user
+      PGDATA: /database
+
+  concourse:
+    #https://github.com/concourse/concourse/issues/8270#issuecomment-1098630670
+    # default concourse image will not work for mac
+    image: rdclda/concourse:7.7.1
+    command: quickstart
+    privileged: true
+    depends_on: [concourse-db,vault]
+    ports: ["8080:8080"]
+    environment:
+      CONCOURSE_POSTGRES_HOST: concourse-db
+      CONCOURSE_POSTGRES_USER: concourse_user
+      CONCOURSE_POSTGRES_PASSWORD: concourse_pass
+      CONCOURSE_POSTGRES_DATABASE: concourse
+      CONCOURSE_EXTERNAL_URL: http://localhost:8080
+      CONCOURSE_ADD_LOCAL_USER: test:test
+      CONCOURSE_MAIN_TEAM_LOCAL_USER: test
+      # instead of relying on the default "detect"
+      CONCOURSE_WORKER_BAGGAGECLAIM_DRIVER: overlay
+      CONCOURSE_CLIENT_SECRET: Y29uY291cnNlLXdlYgo=
+      CONCOURSE_TSA_CLIENT_SECRET: Y29uY291cnNlLXdvcmtlcgo=
+      CONCOURSE_X_FRAME_OPTIONS: allow
+      CONCOURSE_CONTENT_SECURITY_POLICY: "*"
+      CONCOURSE_CLUSTER_NAME: tutorial
+      CONCOURSE_WORKER_CONTAINERD_DNS_SERVER: "8.8.8.8"
+      # For ARM-based machine, change the Concourse runtime to "houdini"
+      CONCOURSE_WORKER_RUNTIME: "containerd"
+      CONCOURSE_VAULT_URL: http://vault:8200
+      CONCOURSE_VAULT_CLIENT_TOKEN: concourse-123
+  vault:
+    image: hashicorp/vault:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile.Vault
+    ports:
+      - 8200:8200
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=test123
+      - SKIP_SETCAP=false
+      - VAULT_ADDR=http://localhost:8200
