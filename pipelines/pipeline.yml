@@ -1,16 +1,16 @@
 ---
 resources:
-- name: repo
+- name: source
   type: git
-  source: {uri: https://github.com/RajKailas17/concourse-local-setup.git}
+  source: {uri: https://github.com/RajKailas17/concourse-pipeline-automation.git}
 
 jobs:
   - name: configure-self
     plan:
-    - get: repo
+    - get: source
       trigger: true
     - set_pipeline: self
-      file: repo/pipeline.yml
+      file: repo/pipelines/pipeline.yml
 
   - name: hello
     plan:
