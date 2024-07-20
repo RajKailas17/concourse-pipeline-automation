@@ -34,10 +34,10 @@ jobs:
             type: registry-image
             source: { repository: busybox }
           run:
-          path: sh
-          args:
-            - -exc
-            - |
-              echo ${USERNAME}
-          params:
-          USERNAME: ((username))
+            path: sh
+            args:
+              - -exc
+              - |
+                echo ${MESSAGE}
+            params:
+            MESSAGE: ((concourse/myteam:testmessage))
