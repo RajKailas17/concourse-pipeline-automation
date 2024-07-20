@@ -1,8 +1,51 @@
 ---
+git-uri: &git-uri
+  uri: git@github.com:RajKailas17/concourse-pipeline-automation.git
+  branch: main
+  private_key: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    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
+    -----END OPENSSH PRIVATE KEY-----
 resources:
 - name: source
   type: git
-  source: {uri: https://github.com/RajKailas17/concourse-pipeline-automation.git}
+  source:
+    <<: *git-uri
 
 jobs:
   - name: configure-self
@@ -25,7 +68,7 @@ jobs:
             source: { repository: busybox }
           run:
             path: echo
-            args: ["Hello world!"]
+            args: ["Hello world! - 12345"]
 
       - task: echo-hello-vault
         config:
@@ -40,4 +83,4 @@ jobs:
               - |
                 echo ${MESSAGE}
             params:
-            MESSAGE: ((concourse/myteam:testmessage))
+            MESSAGE: ((hello))

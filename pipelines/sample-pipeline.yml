@@ -24,4 +24,4 @@ jobs:
               - |
                 echo ${MESSAGE}
             params:
-            MESSAGE: ((concourse/myteam:testmessage))
+            MESSAGE: ((hello))
