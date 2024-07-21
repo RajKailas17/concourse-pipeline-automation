@@ -1,13 +1,11 @@
 ---
-git-uri: &git-uri
-  uri: git@github.com:RajKailas17/concourse-pipeline-automation.git
-  branch: main
-
 resources:
-- name: source-code
-  type: git
-  source:
-    <<: *git-uri
+  - name: source-code
+    type: git
+    icon: github
+    check_every: 30m
+    source:
+      uri: https://github.com/RajKailas17/concourse-pipeline-automation.git
 
 jobs:
   - name: set-self
