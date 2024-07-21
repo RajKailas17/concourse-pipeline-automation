@@ -66,10 +66,10 @@ jobs:
             args:
               - -cx
               - |
-                ytt -f ./source-code/pipelines/templates/simple > hello-world-rendered.yml
-                ytt -f ./concourse-examples/pipelines/templates/multiple-files > multi-files-rendered.yml
+                ytt -f ./source-code/pipelines/templates/simple > hello-world-rendered-raj.yml
+                ytt -f ./source-code/pipelines/templates/multiple-files > multi-files-rendered-raj.yml
                 mv *.yml ./pipeline/
-      - set_pipeline: hello-world-rendered
-        file: pipeline-rendered/hello-world-rendered.yml
-      - set_pipeline: multi-files-rendered
-        file: pipeline-rendered/multi-files-rendered.yml
+      - set_pipeline: hello-world-rendered-raj
+        file: pipeline-rendered/hello-world-rendered-raj.yml
+      - set_pipeline: multi-files-rendered-raj
+        file: pipeline-rendered/multi-files-rendered-raj.yml
