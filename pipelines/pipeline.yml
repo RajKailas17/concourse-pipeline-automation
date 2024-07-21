@@ -10,7 +10,7 @@ resources:
     <<: *git-uri
 
 jobs:
-  - name: configure-self
+  - name: set-self
     plan:
     - get: source-code
       trigger: true
@@ -21,7 +21,7 @@ jobs:
     plan:
       - get: source-code
         trigger: true
-        passed: [configure-self]
+        passed: [set-self]
       - task: echo-hello-world
         config:
           platform: linux
