@@ -68,7 +68,7 @@ jobs:
               - |
                 ytt -f ./source-code/pipelines/templates/simple > hello-world-rendered-raj.yml
                 ytt -f ./source-code/pipelines/templates/multiple-files > multi-files-rendered-raj.yml
-                mv *.yml ./pipeline/
+                mv *.yml ./pipeline-rendered/
       - set_pipeline: hello-world-rendered-raj
         file: pipeline-rendered/hello-world-rendered-raj.yml
       - set_pipeline: multi-files-rendered-raj
