@@ -2,7 +2,7 @@ resources:
   - name: repo
     type: git
     source:
-      uri: https://github.com/your-org/your-repo.git
+      uri: https://github.com/RajKailas17/concourse-pipeline-automation.git
       branch: ((GIT_BRANCH))
 
 jobs:
@@ -25,4 +25,5 @@ jobs:
               - -c
               - |
                 cd repo
-                echo "Hello ((message))
+                ls -ltr
+                echo "Hello ((message))"
