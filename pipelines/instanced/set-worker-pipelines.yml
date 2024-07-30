@@ -1,0 +1,65 @@
+resources:
+
+  - name: code
+    type: git
+    icon: github
+    check_every: 168h
+    source:
+      uri: git@github.com:RajKailas17/concourse-pipeline-automation.git
+      branch: main
+
+jobs:
+
+  - name: set-pipeline
+    plan:
+      - get: code
+        trigger: true
+        version: every
+
+      - set_pipeline: wes-worker-1
+        file: code/pipelines/instanced/worker-pipeline.yml
+
+      - set_pipeline: wes-worker-2
+        file: code/pipelines/instanced/worker-pipeline.yml
+
+      - set_pipeline: wes-worker-3
+        file: code/pipelines/instanced/worker-pipeline.yml
+
+      - set_pipeline: wes-worker-instance-workers
+        file: code/pipelines/instanced/worker-pipeline.yml
+        instance_vars:
+          myid: wes-1
+
+      - set_pipeline: wes-worker-instance-workers
+        file: code/pipelines/instanced/worker-pipeline.yml
+        instance_vars:
+          myid: wes-2
+
+      - set_pipeline: wes-worker-instance-workers
+        file: code/pipelines/instanced/worker-pipeline.yml
+        instance_vars:
+          myid: wes-3
+
+      - set_pipeline: wes-worker-instance-workers
+        file: code/pipelines/instanced/worker-pipeline.yml
+        instance_vars:
+          myid: wes-4
+
+      - set_pipeline: wes-worker-instance-workers
+        file: code/pipelines/instanced/worker-pipeline.yml
+        instance_vars:
+          myid: wes-5
+
+      - set_pipeline: wes-worker-instance-workers
+        file: code/pipelines/instanced/worker-pipeline.yml
+        instance_vars:
+          myid: wes-6
+
+      - set_pipeline: wes-worker-instance-workers
+        file: code/pipelines/instanced/worker-pipeline.yml
+        instance_vars:
+          myid: wes-16
+          dt: 123
+          x: 4
+          y: 7
+          z: 8
