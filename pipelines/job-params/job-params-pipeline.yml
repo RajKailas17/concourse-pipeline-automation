@@ -1,0 +1,28 @@
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/your-org/your-repo.git
+      branch: ((GIT_BRANCH))
+
+jobs:
+  - name: deploy
+    plan:
+      - get: repo
+        trigger: true
+      - task: deploy
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: busybox
+          inputs:
+            - name: repo
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd repo
+                echo "Hello ((hello-world))
