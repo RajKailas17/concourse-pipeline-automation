@@ -5,7 +5,7 @@ resources:
     icon: github
     check_every: 168h
     source:
-      uri: git@github.com:RajKailas17/concourse-pipeline-automation.git
+      uri: https://github.com/RajKailas17/concourse-pipeline-automation.git
       branch: main
 
 jobs:
