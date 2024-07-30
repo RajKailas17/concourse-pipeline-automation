@@ -29,4 +29,4 @@ jobs:
       - set_pipeline: job-params-pipeline-2
         file: code/pipelines/job-params/job-params-pipeline.yml
         var_files:
-          - code/pipelines/job-params/vars-params.yml
+          - code/pipelines/job-params/var-params.yml
