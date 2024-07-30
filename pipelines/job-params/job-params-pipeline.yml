@@ -25,4 +25,4 @@ jobs:
               - -c
               - |
                 cd repo
-                echo "Hello ((hello-world))
+                echo "Hello ((message))
