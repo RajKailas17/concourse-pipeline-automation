@@ -49,7 +49,7 @@ jobs:
                 ls -ltr
                 cp ./release_${release}.yml ../../release_notes
       - load_var: release_info
-        file: release_notes/release_((release.id)).yml
+        file: release_notes/release_2409.yml
 
       - across: # For each target value
           - var: target
