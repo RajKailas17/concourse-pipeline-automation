@@ -12,10 +12,10 @@ jobs:
   - name: dummy
     plan:
       - task: print
-        inputs:
-        - name: code
         config:
           platform: linux
+          inputs:
+            - name: code
           image_resource:
             type: registry-image
             source:
