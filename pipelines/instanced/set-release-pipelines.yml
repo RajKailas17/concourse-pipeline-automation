@@ -31,7 +31,7 @@ jobs:
           inputs:
             - name: code
           outputs:
-            - name: output
+            - name: release_notes
           run:
             path: /bin/sh
             user: root
@@ -47,6 +47,30 @@ jobs:
                 echo "release is ${release}"
                 yq release_${release}.csv -p=csv -o=yml >> release_${release}.yml
                 ls -ltr
-                cp ./release_${release}.yml ../../output
-                cd ../../output
-                ls -ltr
+                cp ./release_${release}.yml ../../release_notes
+      - load_var: release_info
+        file: release_notes/release_((release.id)).yml
+
+      - across: # For each target value
+          - var: target
+            values: ((.:release_info))
+            max_in_flight: 5
+        do:
+          # Create a vars file for the instance pipeline
+          - task: print-data-for-((.:target.serviceName))
+            config:
+              platform: linux
+              image_resource:
+                type: registry-image
+                source:
+                  repository: alpine
+                  run:
+                    path: /bin/sh
+                    user: root
+                    args:
+                      - -c
+                      - |
+                        module=((.:target.serviceName))
+                        branch=((.:target.serviceName.branch))
+                        echo "Module is - " ${module}
+                        echo "branch is -" ${branch}
