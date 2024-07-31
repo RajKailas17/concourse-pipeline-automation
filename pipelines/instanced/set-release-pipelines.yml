@@ -34,6 +34,7 @@ jobs:
             - name: output
           run:
             path: /bin/sh
+            user: root
             args:
               - -c
               - |
@@ -42,7 +43,9 @@ jobs:
                 echo "Listing files "
                 ls -ltr
                 release=((release.id))
-                yq release_${release}.csv -p=csv -o=yml > release_${release}.yml
+                echo "release is ${release}"
+                yq release_${release}.csv -p=csv -o=yml >> release_${release}.yml
+                ls -ltr
                 cp ./release_${release}.yml /output
                 cd /output
                 ls -ltr
