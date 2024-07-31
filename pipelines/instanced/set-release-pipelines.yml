@@ -58,7 +58,7 @@ jobs:
         set_pipeline: ((.:target.release))-((.:target.serviceName))-pipeline
         file: code/pipelines/instanced/release-pipeline-template.yml
         instance_vars:
-          release: ((.:target.release))
+          release: ((.:release_info.release))
         vars:
           app:
             name: ((.:target.serviceName))
