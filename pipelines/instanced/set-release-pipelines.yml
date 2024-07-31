@@ -8,6 +8,10 @@ resources:
       uri: https://github.com/RajKailas17/concourse-pipeline-automation.git
       branch: main
 
+service-credential: &service-credential
+  username: ((service-user.user))
+  password: ((service-pass.pass))
+
 jobs:
   - name: set-self
     public: true
@@ -45,7 +49,7 @@ jobs:
                 release=((release.id))
                 echo "release is ${release}"
                 
-                echo $(cat release_((release.id)).csv | jq -R '{services: [inputs | split(",") | {serviceName: .[0], branchName: .[1]}],release: ((release.id))}') > release.json
+                echo $(cat release_((release.id)).csv | jq -R '{services: [inputs | split(",") | {serviceName: .[0], branchName: .[1], release: ((release.id))}]}') > release.json
                 ls -ltr
                 cp ./release.json ../../release_notes
       - load_var: release_info
@@ -55,10 +59,10 @@ jobs:
           - var: target
             values: ((.:release_info.services))
             max_in_flight: 5
-        set_pipeline: ((.:release_info.release))-((.:target.serviceName))-pipeline
+        set_pipeline: ((.:target.release))-((.:target.serviceName))-pipeline
         file: code/pipelines/instanced/release-pipeline-template.yml
         instance_vars:
-          release: ((.:release_info.release))
+          release: ((.:target.release))
         vars:
           app:
             name: ((.:target.serviceName))
