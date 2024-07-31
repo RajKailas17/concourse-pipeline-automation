@@ -65,13 +65,13 @@ jobs:
               type: registry-image
               source:
                 repository: alpine
-              run:
-                path: /bin/sh
-                user: root
-                args:
-                  - -c
-                  - |
-                    module=((.:target.serviceName))
-                    branch=((.:target.serviceName.branch))
-                    echo "Module is - " ${module}
-                    echo "branch is -" ${branch}
+            run:
+              path: /bin/sh
+              user: root
+              args:
+                - -c
+                - |
+                  module=((.:target.serviceName))
+                  branch=((.:target.serviceName.branch))
+                  echo "Module is - " ${module}
+                  echo "branch is -" ${branch}
