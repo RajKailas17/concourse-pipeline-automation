@@ -30,7 +30,7 @@ jobs:
               repository: alpine
           inputs:
             - name: code
-          output:
+          outputs:
             - name: output
           run:
             path: /bin/sh
