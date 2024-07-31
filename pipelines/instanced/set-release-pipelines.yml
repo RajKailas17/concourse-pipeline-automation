@@ -40,6 +40,6 @@ jobs:
                 apk add --quiet yq
                 cd code/release-list
                 echo "Listing -- "
-                yq release-((release.id)).csv -p csv -o=yml > release-((release.id)).yml
-                echo $(cat release-((release.id)).yml)
-                cp release-((release.id)).yml /output/
+                yq release_((release.id)).csv -p csv -o=yml > release_((release.id)).yml
+                echo $(cat release_((release.id)).yml)
+                cp ./release_((release.id)).yml /output
