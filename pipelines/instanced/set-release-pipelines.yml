@@ -1,0 +1,45 @@
+resources:
+
+  - name: code
+    type: git
+    icon: github
+    check_every: 168h
+    source:
+      uri: https://github.com/RajKailas17/concourse-pipeline-automation.git
+      branch: main
+
+jobs:
+  - name: set-self
+    public: true
+    plan:
+      - get: code
+        trigger: true
+      - set_pipeline: self
+        file: code/pipelines/instanced/set-release-pipelines.yml
+  - name: set-pipelines
+    plan:
+      - get: code
+        trigger: true
+        passed: [ set-self ]
+      - task: get-release-notes
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          inputs:
+            - name: code
+          output:
+            - name: output
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                apk add --quiet yq
+                cd code/release-list
+                echo "Listing -- "
+                yq release-((release)).csv -p csv -o=yml > release-((release)).yml
+                echo $(cat release-((release)).yml)
+                cp release-((release)).yml /output/
