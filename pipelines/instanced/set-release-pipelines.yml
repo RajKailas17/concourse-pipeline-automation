@@ -39,7 +39,6 @@ jobs:
               - -c
               - |
                 apk add --quiet yq
-                ls -ltr
                 cd code/release-list
                 echo "Listing files "
                 ls -ltr
@@ -55,7 +54,7 @@ jobs:
           - var: target
             values: ((.:release_info))
             max_in_flight: 5
-        set_pipeline: ((release.id))-((.:target.serviceName))-pipeline
+        set_pipeline: ((app.release))-((.:target.serviceName))-pipeline
         file: code/pipelines/instanced/release-pipeline-template.yml
         instance_vars:
           release: ((release.id))
@@ -63,3 +62,4 @@ jobs:
           app:
             name: ((.:target.serviceName))
             branch: ((.:target.branchName))
+            release: ((release.id))
