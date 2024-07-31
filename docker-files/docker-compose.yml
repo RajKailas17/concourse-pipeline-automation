@@ -76,7 +76,7 @@ services:
       # For ARM-based machine, change the Concourse runtime to "houdini"
       CONCOURSE_WORKER_RUNTIME: "containerd"
       CONCOURSE_VAULT_URL: http://vault:8200
-      CONCOURSE_VAULT_CLIENT_TOKEN: concourse-123
+      CONCOURSE_VAULT_CLIENT_TOKEN: test123
   vault:
     image: hashicorp/vault:latest
     build:
