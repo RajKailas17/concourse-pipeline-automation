@@ -44,8 +44,8 @@ jobs:
                 ls -ltr
                 release=((release.id))
                 echo "release is ${release}"
-                yq release_${release}.csv -p=csv -o=yml >> release.yml
-                echo $(cat release_${release}.csv | jq -R '{services: [inputs | split(",") | {serviceName: .[0], branchName: .[1]}],release: ${release}}') > release.json
+                
+                echo $(cat release_((release.id)).csv | jq -R '{services: [inputs | split(",") | {serviceName: .[0], branchName: .[1]}],release: ((release.id))}') > release.json
                 ls -ltr
                 cp ./release.json ../../release_notes
       - load_var: release_info
