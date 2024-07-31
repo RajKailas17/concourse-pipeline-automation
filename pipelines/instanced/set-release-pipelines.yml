@@ -44,17 +44,18 @@ jobs:
                 ls -ltr
                 release=((release.id))
                 echo "release is ${release}"
-                yq release_${release}.csv -p=csv -o=yml >> release_${release}.yml
+                yq release_${release}.csv -p=csv -o=yml >> release.yml
+                echo "release: ${release}" >> release.yml
                 ls -ltr
-                cp ./release_${release}.yml ../../release_notes
+                cp ./release.yml ../../release_notes
       - load_var: release_info
-        file: release_notes/release_2409.yml
+        file: release_notes/release.yml
 
       - across: # For each target value
           - var: target
             values: ((.:release_info))
             max_in_flight: 5
-        set_pipeline: ((vault:release.id))-((.:target.serviceName))-pipeline
+        set_pipeline: ((.:target.release))-((.:target.serviceName))-pipeline
         file: code/pipelines/instanced/release-pipeline-template.yml
         instance_vars:
           release: ((release.id))
