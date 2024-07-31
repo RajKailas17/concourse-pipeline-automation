@@ -12,6 +12,8 @@ jobs:
   - name: dummy
     plan:
       - task: print
+        inputs:
+        - name: code
         config:
           platform: linux
           image_resource:
@@ -23,5 +25,7 @@ jobs:
             args:
               - -exc
               - |
+                ls -ltr
+                cd code/pipelines
                 echo "Hello World - ((app.name)) - ((app.branch))"
                 
