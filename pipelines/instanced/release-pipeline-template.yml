@@ -1,0 +1,27 @@
+resources:
+
+  - name: code
+    type: git
+    icon: github
+    check_every: 168h
+    source:
+      uri: https://github.com/RajKailas17/((app.name)).git
+      branch: ((app.branch))
+
+jobs:
+  - name: dummy
+    plan:
+      - task: print
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          run:
+            path: /bin/sh
+            args:
+              - -exc
+              - |
+                echo "Hello World - ((app.name)) - ((app.branch))"
+                

@@ -55,23 +55,11 @@ jobs:
           - var: target
             values: ((.:release_info))
             max_in_flight: 5
-        do:
-        - task: print-something
-          config:
-            platform: linux
-            inputs:
-            - name: code
-            image_resource:
-              type: registry-image
-              source:
-                repository: alpine
-            run:
-              path: /bin/sh
-              user: root
-              args:
-                - -c
-                - |
-                  module=((.:target.serviceName))
-                  branch=((.:target.serviceName.branch))
-                  echo "Module is - " ${module}
-                  echo "branch is -" ${branch}
+        set_pipeline: ((release.id))-((.:release_info.serviceName))-pipeline
+        file: code/pipelines/instanced/release-pipeline-template.yml
+        instance_vars:
+          release: ((release.id))
+        vars:
+          app:
+            name: ((.:target.serviceName))
+            branch: ((.:target.branchName))
