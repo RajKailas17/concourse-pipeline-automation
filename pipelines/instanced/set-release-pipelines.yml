@@ -39,12 +39,13 @@ jobs:
               - -c
               - |
                 apk add --quiet yq
+                ls -ltr
                 cd code/release-list
                 echo "Listing files "
                 ls -ltr
                 release=((release.id))
                 echo "release is ${release}"
-                yq release_${release}.csv -p=csv -o=yml
+                yq release_${release}.csv -p=csv -o=yml >> release_${release}.yml
                 ls -ltr
                 cp ./release_${release}.yml ../../output
                 cd ../../output
