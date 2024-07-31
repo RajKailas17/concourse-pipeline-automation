@@ -55,7 +55,7 @@ jobs:
           - var: target
             values: ((.:release_info))
             max_in_flight: 5
-        set_pipeline: ((release.id))-((.:release_info.serviceName))-pipeline
+        set_pipeline: ((release.id))-((.:target.serviceName))-pipeline
         file: code/pipelines/instanced/release-pipeline-template.yml
         instance_vars:
           release: ((release.id))
