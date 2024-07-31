@@ -11,11 +11,13 @@ resources:
 jobs:
   - name: dummy
     plan:
+      - get: code
+        trigger: true
       - task: print
         config:
           platform: linux
           inputs:
-            - name: code
+          - name: code
           image_resource:
             type: registry-image
             source:
