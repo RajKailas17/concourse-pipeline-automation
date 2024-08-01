@@ -5,7 +5,7 @@ resources:
     icon: github
     check_every: 30m
     source:
-      uri: https://github.com/concourse/examples
+      uri: https://github.com/RajKailas17/concourse-pipeline-automation.git
 
 jobs:
   # update this pipeline before updating child pipelines
