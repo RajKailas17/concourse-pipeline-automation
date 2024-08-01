@@ -1,6 +1,6 @@
 ---
 resources:
-  - name: code
+  - name: concourse-examples
     type: git
     icon: github
     check_every: 168h
