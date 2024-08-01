@@ -1,11 +1,12 @@
 ---
 resources:
-  - name: concourse-examples
+  - name: code
     type: git
     icon: github
-    check_every: 30m
+    check_every: 168h
     source:
       uri: https://github.com/RajKailas17/concourse-pipeline-automation.git
+      branch: main
 
 jobs:
   # update this pipeline before updating child pipelines
