@@ -1,2 +1,5 @@
 serviceName,branchName,environment
 concourse-pipeline-automation,main,int
+concourse-pipeline-automation,main,trn
+concourse-test,main,int
+concourse-test1,main,int
